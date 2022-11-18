@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { actionEmail, actionNome } from '../redux/actions/indexAction';
 import getToken from '../services';
+import logo from '../trivia.png';
 
 const INITIAL_STATE = {
   name: '',
@@ -51,52 +52,62 @@ class Login extends React.Component {
   render() {
     const { buttonPlay, name, email } = this.state;
     return (
-      <>
-        <h1>Login</h1>
-        <label htmlFor="nome">
-          nome
-          <input
-            type="text"
-            id="nome"
-            name="name"
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-            value={ name }
-          />
+      <div className="Loggin-page">
+        <img src={ logo } className="App-logo" alt="App-logo" />
+        <div className="Loggin-container">
+          <h1 className="tittle">Login</h1>
+          <div className="loggin-inputs">
+            <label htmlFor="nome">
+              NAME
+              <input
+                className="input-group-text"
+                type="text"
+                id="nome"
+                name="name"
+                data-testid="input-player-name"
+                onChange={ this.handleChange }
+                value={ name }
+              />
 
-        </label>
+            </label>
 
-        <label htmlFor="email">
-          email
-          <input
-            type="email"
-            id="email"
-            name="email"
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-            value={ email }
-          />
+            <label htmlFor="email" style={ {} }>
+              EMAIL
+              <input
+                type="email"
+                id="email"
+                name="email"
+                data-testid="input-gravatar-email"
+                onChange={ this.handleChange }
+                value={ email }
+                className="input-group-text"
+              />
 
-        </label>
-        <button
-          type="button"
-          data-testid="btn-play"
-          disabled={ buttonPlay }
-          onClick={ this.entrar }
-        >
-          Play
+            </label>
+          </div>
+          <div>
+            <button
+              className="btn btn-dark"
+              type="button"
+              data-testid="btn-play"
+              disabled={ buttonPlay }
+              onClick={ this.entrar }
+            >
+              Play
 
-        </button>
+            </button>
 
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ this.configButton }
-        >
-          Configurações
-        </button>
-
-      </>
+            <button
+              className="btn btn-dark"
+              type="button"
+              data-testid="btn-settings"
+              onClick={ this.configButton }
+            >
+              Config
+            </button>
+          </div>
+        </div>
+      </div>
 
     );
   }

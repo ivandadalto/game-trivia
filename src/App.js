@@ -5,6 +5,7 @@ import Feedback from './Pages/Feedback';
 import Login from './Pages/Login';
 import Game from './Pages/Game';
 import Ranking from './Pages/ranking';
+import './App.css';
 
 export default function App() {
   return (

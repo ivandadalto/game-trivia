@@ -5,9 +5,11 @@ class Timer extends React.Component {
   render() {
     const { timer } = this.props;
     return (
-      <h2>
-        { timer }
-      </h2>
+      <div className="timer-container">
+        <h1 className="timer">
+          { timer }
+        </h1>
+      </div>
     );
   }
 }

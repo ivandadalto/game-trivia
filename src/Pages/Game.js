@@ -39,6 +39,7 @@ class Game extends React.Component {
     }
     const { dispatch } = this.props;
     await dispatch(saveQuestions(questions));
+
     this.randomAnswer();
     this.timer();
     dispatch(resetScore());
@@ -85,9 +86,10 @@ class Game extends React.Component {
     const { answerColor, indexQ } = this.state;
     const { questions } = this.props;
     if (answerColor) {
-      return answer === questions.results[indexQ].correct_answer ? 'correct' : 'wrong';
+      return answer === questions.results[indexQ].correct_answer ? 'btn btn-success'
+        : 'btn btn-danger';
     }
-    return '';
+    return 'btn btn-dark';
   };
 
   handleClick = ({ target }) => {
@@ -135,6 +137,7 @@ class Game extends React.Component {
       indexPergunta: prev.indexPergunta + 1,
       timer: 30,
       buttonDisabled: false,
+      enableNext: false,
     }), this.randomAnswer);
     this.timer();
   };
@@ -147,45 +150,69 @@ class Game extends React.Component {
       <div>
         <Header />
         <Timer timer={ timer } />
-        {
-          questions.length !== 0
-            ? questions.results.filter((_e, i) => i === indexQ)
-              .map((question) => (
-                <div
-                  key={ question.question }
-                >
-                  <p data-testid="question-category">{question.category}</p>
-                  <br />
-                  <p data-testid="question-text">{question.question}</p>
-                  <div data-testid="answer-options">
-                    {array.map((answer, index) => (
-                      <button
-                        className={ this.handleColor(answer) }
-                        data-testid={ answer === question.correct_answer
-                          ? 'correct-answer'
-                          : `wrong-answer-${index}` }
-                        type="button"
-                        key={ answer }
-                        onClick={ this.handleClick }
-                        value={ answer }
-                        disabled={ buttonDisabled }
-                      >
-                        {answer}
-                      </button>
-                    ))}
+        <div className="question-container">
+          {
+            questions.length !== 0
+              ? questions.results.filter((_e, i) => i === indexQ)
+                .map((question) => (
+                  <div
+                    className="question"
+                    key={ question.question }
+                  >
+                    <p data-testid="question-category">
+                      Category:
+                      {' '}
+                      {question.category}
+                    </p>
+                    <p
+                      className="question-text"
+                      data-testid="question-text"
+                    >
+                      {question.question}
+
+                    </p>
+                    <div data-testid="answer-options">
+                      {array.map((answer, index) => (
+                        <div className="button-game" key={ answer }>
+                          <button
+                            className={ this.handleColor(answer) }
+                            data-testid={ answer === question.correct_answer
+                              ? 'correct-answer'
+                              : `wrong-answer-${index}` }
+                            type="button"
+                            onClick={ this.handleClick }
+                            value={ answer }
+                            disabled={ buttonDisabled }
+                          >
+                            {answer}
+                          </button>
+                        </div>
+                      ))}
+                      {
+                        (nextButton && event.target.value === question.correct_answer)
+                          ? <p className="correct-answer">Correct!</p> : null
+                      }
+                      {(nextButton && question.incorrect_answers
+                        .some((e) => e === event.target.value))
+                        ? <p className="incorrect">Incorrect!</p> : null}
+                      {(nextButton && timer === 0)
+                        ? <p className="timeup">{'Time\'s UP!'}</p> : null}
+                      { nextButton && (
+                        <button
+                          className="btn btn-dark"
+                          data-testid="btn-next"
+                          type="button"
+                          onClick={ this.handleClickNext }
+                        >
+                          Next
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )) : null
-        }
-        { nextButton && (
-          <button
-            data-testid="btn-next"
-            type="button"
-            onClick={ this.handleClickNext }
-          >
-            Next
-          </button>
-        )}
+                )) : null
+          }
+
+        </div>
       </div>
     );
   }

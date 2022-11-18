@@ -9,7 +9,6 @@ class Feedback extends React.Component {
   componentDidMount() {
     const { player } = this.props;
     const rankingLocal = JSON.parse(localStorage.getItem('ranking'));
-    console.log(rankingLocal);
     if (rankingLocal !== null) {
       localStorage
         .setItem('ranking', JSON.stringify([...rankingLocal, player]));
@@ -31,26 +30,54 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <h1 data-testid="feedback-text">Feedback</h1>
-        <p data-testid="feedback-total-score">{score}</p>
-        <p data-testid="feedback-total-question">{assertions}</p>
-        {assertions < acertos ? (
-          <p data-testid="feedback-text">Could be better...</p>
-        ) : (<p data-testid="feedback-text">Well Done!</p>)}
-        <button
-          data-testid="btn-play-again"
-          type="button"
-          onClick={ this.sendToLogin }
-        >
-          Play Again
-        </button>
-        <button
-          data-testid="btn-ranking"
-          type="button"
-          onClick={ this.sendToRanking }
-        >
-          Ranking
-        </button>
+        <div className="feedback-container">
+          <div className="feedback-card">
+            <h1 data-testid="feedback-text">Feedback</h1>
+            <p data-testid="feedback-total-score" className="feedback-text">
+              Total Points:
+              {' '}
+              {score}
+            </p>
+            <p data-testid="feedback-total-question" className="feedback-text">
+              Assertions:
+              {' '}
+              {assertions}
+            </p>
+            {assertions < acertos ? (
+              <p
+                data-testid="feedback-text"
+                className="feedback-yellow"
+              >
+                Could be better...
+
+              </p>
+            )
+              : (
+                <p
+                  data-testid="feedback-text"
+                  className="feedback-green"
+                >
+                  Well Done!
+
+                </p>)}
+            <button
+              className="btn btn-dark"
+              data-testid="btn-play-again"
+              type="button"
+              onClick={ this.sendToLogin }
+            >
+              Play Again
+            </button>
+            <button
+              className="btn btn-dark"
+              data-testid="btn-ranking"
+              type="button"
+              onClick={ this.sendToRanking }
+            >
+              Ranking
+            </button>
+          </div>
+        </div>
       </>
     );
   }
