@@ -13,7 +13,7 @@ class Ranking extends React.Component {
     const sortedRankingLocal = rankingLocal.sort((a, b) => b.score - a.score);
     return (
       <div className="ranking-container">
-        <h1 className="ranking-title" data-testid="ranking-title">Hall of Fame</h1>
+        <h1 className="ranking-title" data-testid="ranking-title">Hall of Fame 亗</h1>
         { rankingLocal !== undefined ? (
           sortedRankingLocal.map((player, index) => (
             <div className="ranking-card" key={ index }>
